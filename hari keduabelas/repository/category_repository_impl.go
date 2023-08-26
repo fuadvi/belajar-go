@@ -25,8 +25,8 @@ func (repository *CategoryRepositoryImpl) Save(ctx context.Context, tx sql.Tx, c
 }
 
 func (repository *CategoryRepositoryImpl) Update(ctx context.Context, tx sql.Tx, category domain.Category) domain.Category {
-	SQL := "update category set name = ?"
-	_, err := tx.ExecContext(ctx, SQL, category.Name)
+	SQL := "update category set name = ? where id = ?"
+	_, err := tx.ExecContext(ctx, SQL, category.Name, category.Id)
 	helper.PanicIfError(err)
 
 	return category
