@@ -22,5 +22,4 @@ func TestDecode(t *testing.T) {
 	fmt.Println(resultCostumer.FirstName)
 	fmt.Println(resultCostumer.MiddleName)
 	fmt.Println(resultCostumer.LastName)
-
 }
