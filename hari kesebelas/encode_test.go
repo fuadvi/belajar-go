@@ -6,18 +6,19 @@ import (
 	"testing"
 )
 
-func toEncode(data interface{}) {
+func ToEncode(data interface{}) string {
 	byte, err := json.Marshal(data)
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println(string(byte))
+	return string(byte)
 }
 
 func TestEncode(t *testing.T) {
-	toEncode("fuad")
-	toEncode(1)
-	toEncode(true)
-	toEncode([]string{"teuku", "fuad", "maulana"})
+	ToEncode("fuad")
+	ToEncode(1)
+	ToEncode(true)
+	ToEncode([]string{"teuku", "fuad", "maulana"})
 }
