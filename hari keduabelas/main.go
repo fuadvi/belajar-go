@@ -5,6 +5,7 @@ import (
 	"belajar-resfull-api/controller"
 	"belajar-resfull-api/exception"
 	"belajar-resfull-api/helper"
+	"belajar-resfull-api/middleware"
 	"belajar-resfull-api/repository"
 	"belajar-resfull-api/service"
 	"github.com/go-playground/validator/v10"
@@ -32,7 +33,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    "localhost:8080",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 
 	err := server.ListenAndServe()
