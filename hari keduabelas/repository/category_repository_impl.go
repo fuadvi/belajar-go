@@ -6,13 +6,21 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 )
 
 type CategoryRepositoryImpl struct {
 }
 
-func (repository *CategoryRepositoryImpl) Save(ctx context.Context, tx sql.Tx, category domain.Category) domain.Category {
+func NewCategoryRepository() CategoryRepository {
+	return &CategoryRepositoryImpl{}
+}
+
+func (repository *CategoryRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, category domain.Category) domain.Category {
 	SQL := "insert into category(name) values (?)"
+	fmt.Println(category.Name)
+	fmt.Println(2414)
+	fmt.Println(category)
 	result, err := tx.ExecContext(ctx, SQL, category.Name)
 	helper.PanicIfError(err)
 
@@ -24,7 +32,7 @@ func (repository *CategoryRepositoryImpl) Save(ctx context.Context, tx sql.Tx, c
 	return category
 }
 
-func (repository *CategoryRepositoryImpl) Update(ctx context.Context, tx sql.Tx, category domain.Category) domain.Category {
+func (repository *CategoryRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, category domain.Category) domain.Category {
 	SQL := "update category set name = ? where id = ?"
 	_, err := tx.ExecContext(ctx, SQL, category.Name, category.Id)
 	helper.PanicIfError(err)
@@ -32,16 +40,17 @@ func (repository *CategoryRepositoryImpl) Update(ctx context.Context, tx sql.Tx,
 	return category
 }
 
-func (repository *CategoryRepositoryImpl) Delete(ctx context.Context, tx sql.Tx, categoryId int) {
-	SQL := "delete category where id = ?"
+func (repository *CategoryRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, categoryId int) {
+	SQL := "delete from category where id = ?"
 	_, err := tx.ExecContext(ctx, SQL, categoryId)
 	helper.PanicIfError(err)
 }
 
-func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, tx sql.Tx, categoryId int) (domain.Category, error) {
+func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, tx *sql.Tx, categoryId int) (domain.Category, error) {
 	SQL := "select id, name from category where id = ?"
 	rows, err := tx.QueryContext(ctx, SQL, categoryId)
 	helper.PanicIfError(err)
+	defer rows.Close()
 
 	category := domain.Category{}
 	if rows.Next() {
@@ -54,10 +63,11 @@ func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, tx sql.T
 	return category, nil
 }
 
-func (repository *CategoryRepositoryImpl) FindAll(ctx context.Context, tx sql.Tx) []domain.Category {
+func (repository *CategoryRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []domain.Category {
 	SQL := "select id, name from category"
 	rows, err := tx.QueryContext(ctx, SQL)
 	helper.PanicIfError(err)
+	defer rows.Close()
 
 	categories := []domain.Category{}
 	for rows.Next() {
