@@ -3,8 +3,9 @@ package main
 import (
 	"belajar-resfull-api/helper"
 	"belajar-resfull-api/middleware"
-	_ "github.com/go-sql-driver/mysql"
 	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func NewServer(authMiddleware *middleware.AuthMiddleware) *http.Server {
