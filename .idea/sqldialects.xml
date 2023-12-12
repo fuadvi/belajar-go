@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/belajar go gorm/database.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/golang migration/belajar-golang-restful-api/db/migrations/20231206145514_create_table_category.down.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/golang migration/belajar-golang-restful-api/db/migrations/20231206145514_create_table_category.up.sql" dialect="GenericSQL" />
     <file url="PROJECT" dialect="PostgreSQL" />
